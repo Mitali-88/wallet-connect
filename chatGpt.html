@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wallet Connect</title>
+  <script src="https://cdn.jsdelivr.net/npm/@walletconnect/web3-provider@1.7.1/dist/umd/index.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+</head>
+<body>
+  <label for="fname">Your address:</label>
+  <input type="text" id="fname" name="fname"><br><br>
+  <button onclick="connectWC()">Connect Wallet Connect</button>
+  <button onclick="send()">Send Transaction</button>
+  <button onclick="disconnect()">Disconnect Wallet</button>
+
+  <script type="text/javascript">
+    var account;
+    var provider;
+    var web3;
+
+    var connectWC = async () => {
+      try {
+        provider = new WalletConnectProvider.default({
+          rpc: {
+            50: "https://erpc.xdcrpc.com",
+          },
+        });
+        await provider.enable();
+        web3 = new Web3(provider);
+        account = (await web3.eth.getAccounts())[0];
+        document.getElementById("fname").value = account;
+        console.log("Connected to WalletConnect");
+      } catch (error) {
+        console.log("Failed to connect:", error);
+      }
+    };
+
+    var send = async () => {
+      try {
+        const amountInEther = "0.001";
+        const amountInWei = web3.utils.toWei(amountInEther, "ether");
+        const transaction = await web3.eth.sendTransaction({
+          from: account,
+          to: "xdc80793f2eFe8fB2d553Ca2C82AF9ABd415327161e",
+          value: amountInWei,
+        });
+        console.log("Transaction successful:", transaction);
+      } catch (error) {
+        console.log("Transaction failed:", error);
+      }
+    };
+
+    var disconnect = async () => {
+      try {
+        await provider.disconnect();
+        console.log("Wallet disconnected");
+      } catch (error) {
+        console.log("Failed to disconnect:", error);
+      }
+    };
+
+  </script>
+
+</body>
+</html>
