@@ -19,7 +19,7 @@
 
       var accounts  = await web3.eth.getAccounts(); 
       account = accounts[0]; 
-      document.getElementById("fname").value = account;
+      document.getElementById("address").value = account;
       var balance = await web3.eth.getBalance(account);
       console.log("see your address",account);
       // var final=balance/1000000000000000000
@@ -27,8 +27,7 @@
     }
 
 var send = async () => {
-  // const amountInEther = 0.001;
-  // const amountInWei = web3.utils.toWei(amountInEther.toString(), "ether")
+
   console.log("see",w3.utils.toWei("0.001", "ether"))
   if (w3) {
     try {
@@ -48,15 +47,6 @@ var send = async () => {
     console.log("Web3 instance not available.");
   }
 };
-
-// var sign = async (msg) => {
-//       if (w3) {
-//         return await w3.eth.personal.sign(msg, account)
-//       } else {
-//         return false
-//       }
-//     }
-
 
     var disconnect = async () => {
       await provider.disconnect()
