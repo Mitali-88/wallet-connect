@@ -1,55 +1,46 @@
- 
- 
-    var account;
+var account;
 
-    // https://docs.walletconnect.com/quick-start/dapps/web3-provider
-    var provider = new WalletConnectProvider.default({
-      rpc: {
+var provider = new WalletConnectProvider.default({
+  rpc: {
+    50: "https://erpc.xdcrpc.com",
+    // 51: "https://rpc.apothem.network/"
+  },
+});
 
-        50: "https://erpc.xdcrpc.com",
-        // 51: "https://rpc.apothem.network/"
-      },
-     
-    });
+var web3;
 
-    var connectWC = async () => {
-      await provider.enable(); 
-      const web3 = new Web3(provider);
-      window.w3 = web3
+var connectWC = async () => {
+  await provider.enable();
+  web3 = new Web3(provider);
 
-      var accounts  = await web3.eth.getAccounts(); 
-      account = accounts[0]; 
-      document.getElementById("address").value = account;
-      var balance = await web3.eth.getBalance(account);
-      console.log("see your address",account);
-      // var final=balance/1000000000000000000
-      console.log("Your balance:", web3.utils.fromWei(balance, "ether"));
-    }
+  var accounts = await web3.eth.getAccounts();
+  account = accounts[0];
+  document.getElementById("address").innerHTML = account;
+  var balance = await web3.eth.getBalance(account);
+  console.log("See your address:", account);
+  console.log("Your balance:", web3.utils.fromWei(balance, "ether"));
+};
 
 var send = async () => {
-
-  console.log("see",w3.utils.toWei("0.001", "ether"))
-  if (w3) {
+  if (web3) {
     try {
-      const transaction = await w3.eth.sendTransaction({
+      var toAddress = document.getElementById("indent").value;
+      const transaction = await web3.eth.sendTransaction({
         from: account,
-        to: "0x80793f2eFe8fB2d553Ca2C82AF9ABd415327161e",
-        value: w3.utils.toWei(0.001.toString(), "ether")
-        // value: 0.001
+        to:toAddress,
+        value: web3.utils.toWei("0.001", "ether")
       });
       console.log("Transaction successful:", transaction);
-    }
-     catch (error) {
+    } catch (error) {
       console.log("Transaction failed:", error);
     }
-  } 
-  else {
+  } else {
     console.log("Web3 instance not available.");
   }
 };
 
-    var disconnect = async () => {
-      await provider.disconnect()
-    }
-
- 
+var disconnect = async () => {
+  await provider.disconnect();
+  console.log("wallet disconnected");
+};
+// to: "0x80793f2eFe8fB2d553Ca2C82AF9ABd415327161e",

@@ -11,16 +11,21 @@
 </head>
 <body>
   <div id="mydiv">
-  <label for="fromAddress"  class="Heading">Your Connected Wallet Address:</label>
-  <input type="text" class="address" name="fromAddress" id ="address"><br><br>
+   
+      <label for="fromAddress"  class="Heading">Your Connected Wallet Address:</label>
+      <p id="address"></p>
+   
+  
+  <!-- <input type="text" class="address" name="fromAddress" id ="address"><br><br> -->
   <span id="labelIndent">
     <label for="toAddress" class="Heading">To Address:</label>
+    <input type="text" class="toAddress address" id="indent" name="toAddress"><br><br>
   </span>
  
-  <input type="text" class="toAddress address" id="indent"name="toAddress"><br><br>
-  <button onclick="connectWC()">Connect Wallet Connect</button>
+  
+  <button onclick="connectWC()">Connect Wallet</button>
   <button onclick="send()">Send Transaction</button>
-  <button onclick="disconnect()">Dissconnect Wallet </button>
+  <button onclick="disconnect()">Disconnect Wallet </button>
 </div>
 
 </body>
